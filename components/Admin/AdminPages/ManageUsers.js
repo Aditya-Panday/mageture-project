@@ -95,10 +95,11 @@ export default function ManageUsers() {
                 }}
               >
                 <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLabel">
+                  <h5 className="modal-title my-1" id="exampleModalLabel">
                     Add Users
                   </h5>
                 </div>
+                <hr  className="mb-4"/>
                 <div className="modal-body">
                   <div className="row">
                     <div className="col-md-6 mb-3">

@@ -10,10 +10,7 @@ import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import DescriptionIcon from "@mui/icons-material/Description";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import HomeIcon from "@mui/icons-material/Home";
-import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
-import ArticleIcon from "@mui/icons-material/Article";
-import LayersIcon from "@mui/icons-material/Layers";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import DensityMediumIcon from "@mui/icons-material/DensityMedium";
 
@@ -37,7 +34,6 @@ const AdminLayout = ({ children }) => {
   };
 
   const handleLogout = () => {
-    // Handle logout functionality here
     console.log("Logged out");
   };
 
@@ -79,46 +75,7 @@ const AdminLayout = ({ children }) => {
               </Tooltip>
             </li>
           )}
-          {userInfo.user.commonsetting && (
-            <li
-              className={
-                currentPath.includes("/admin/commonsetting") ? "active" : ""
-              }
-            >
-              <Tooltip title="CommonSetting" placement="right">
-                <Link href="/admin/commonsetting" className="tptp">
-                  <SettingsIcon className="ic-edit" />
-                  <span className="text mx-2">
-                    {side ? "" : "CommonSetting"}
-                  </span>
-                </Link>
-              </Tooltip>
-            </li>
-          )}
-          {userInfo.user.banner && (
-            <li
-              className={currentPath.includes("/admin/banner") ? "active" : ""}
-            >
-              <Tooltip title="Banner" placement="right">
-                <Link href="/admin/banner" className="tptp">
-                  <ArticleIcon className="ic-edit" />
-                  <span className="text mx-2">{side ? "" : "Banner"}</span>
-                </Link>
-              </Tooltip>
-            </li>
-          )}
-          {userInfo.user.pages && (
-            <li
-              className={currentPath.includes("/admin/pages") ? "active" : ""}
-            >
-              <Tooltip title="Pages" placement="right">
-                <Link href="/admin/pages" className="tptp">
-                  <LayersIcon className="ic-edit" />
-                  <span className="text mx-2">{side ? "" : "Pages"}</span>
-                </Link>
-              </Tooltip>
-            </li>
-          )}
+
           {userInfo.user.blogs && (
             <li
               className={currentPath.includes("/admin/blogs") ? "active" : ""}
@@ -205,33 +162,7 @@ const AdminLayout = ({ children }) => {
                     </span>
                   </li>
                 )}
-                {userInfo.user.commonsetting && (
-                  <li onClick={() => router.push("/admin/commonsetting")}>
-                    <SettingsIcon className="bx bxs-dollar-circle" />
-                    <span className="text">
-                      <h5>CommonSetting</h5>
-                      <p>Manage Common </p>
-                    </span>
-                  </li>
-                )}
-                {userInfo.user.banner && (
-                  <li onClick={() => router.push("/admin/banner")}>
-                    <ArticleIcon className="bx bxs-dollar-circle" />
-                    <span className="text">
-                      <h5>Banner</h5>
-                      <p>Manages Banner</p>
-                    </span>
-                  </li>
-                )}
-                {userInfo.user.pages && (
-                  <li onClick={() => router.push("/admin/pages")}>
-                    <LayersIcon className="bx bxs-dollar-circle" />
-                    <span className="text">
-                      <h5>Pages</h5>
-                      <p>Manages Pages </p>
-                    </span>
-                  </li>
-                )}
+
                 {userInfo.user.blogs && (
                   <li onClick={() => router.push("/admin/blogs")}>
                     <DescriptionIcon className="bx bxs-dollar-circle" />
@@ -264,9 +195,7 @@ const AdminLayout = ({ children }) => {
           )}
           {children}
         </main>
-        {/* <!-- MAIN --> */}
       </section>
-      {/* <!-- CONTENT --> */}
       <ToastContainer />
     </div>
   );
