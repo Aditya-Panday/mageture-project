@@ -9,7 +9,6 @@ import { usePathname, useRouter } from "next/navigation";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import DescriptionIcon from "@mui/icons-material/Description";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import DensityMediumIcon from "@mui/icons-material/DensityMedium";
@@ -19,19 +18,6 @@ const AdminLayout = ({ children }) => {
   const currentPath = usePathname();
   const username = "Admin";
   const [side, setSide] = useState(true);
-
-  // Placeholder userInfo object for demonstration purposes
-  const userInfo = {
-    user: {
-      home: true,
-      commonsetting: true,
-      banner: true,
-      pages: true,
-      blogs: true,
-      leads: true,
-      Role: "Admin",
-    },
-  };
 
   const handleLogout = () => {
     console.log("Logged out");
@@ -65,55 +51,31 @@ const AdminLayout = ({ children }) => {
               </Link>
             </Tooltip>
           </li>
-          {userInfo.user.home && (
-            <li className={currentPath.includes("/admin/home") ? "active" : ""}>
-              <Tooltip title="Home" placement="right">
-                <Link href="/admin/home" className="tptp">
-                  <HomeIcon className="ic-edit" />
-                  <span className="text mx-2 ">{side ? "" : "Home "}</span>
-                </Link>
-              </Tooltip>
-            </li>
-          )}
 
-          {userInfo.user.blogs && (
-            <li
-              className={currentPath.includes("/admin/blogs") ? "active" : ""}
-            >
-              <Tooltip title="Blogs" placement="right">
-                <Link href="/admin/blogs" className="tptp">
-                  <DescriptionIcon className="ic-edit" />
-                  <span className="text mx-2">{side ? "" : "Blogs"}</span>
-                </Link>
-              </Tooltip>
-            </li>
-          )}
-          {userInfo.user.leads && (
-            <li
-              className={currentPath.includes("/admin/leads") ? "active" : ""}
-            >
-              <Tooltip title="Leads" placement="right">
-                <Link href="/admin/leads" className="tptp">
-                  <LocalLibraryIcon className="ic-edit" />
-                  <span className="text mx-2">
-                    {side ? "" : "LeadsEnquiry"}
-                  </span>
-                </Link>
-              </Tooltip>
-            </li>
-          )}
-          {userInfo.user.Role === "Admin" && (
-            <li
-              className={currentPath.includes("/admin/users") ? "active" : ""}
-            >
-              <Tooltip title="Manage Users" placement="right">
-                <Link href="/admin/users" className="tptp">
-                  <PeopleAltIcon className="ic-edit" />
-                  <span className="text mx-2">{side ? "" : "ManageUsers"}</span>
-                </Link>
-              </Tooltip>
-            </li>
-          )}
+          <li className={currentPath.includes("/admin/blogs") ? "active" : ""}>
+            <Tooltip title="Blogs" placement="right">
+              <Link href="/admin/blogs" className="tptp">
+                <DescriptionIcon className="ic-edit" />
+                <span className="text mx-2">{side ? "" : "Blogs"}</span>
+              </Link>
+            </Tooltip>
+          </li>
+          <li className={currentPath.includes("/admin/leads") ? "active" : ""}>
+            <Tooltip title="Leads" placement="right">
+              <Link href="/admin/leads" className="tptp">
+                <LocalLibraryIcon className="ic-edit" />
+                <span className="text mx-2">{side ? "" : "LeadsEnquiry"}</span>
+              </Link>
+            </Tooltip>
+          </li>
+          <li className={currentPath.includes("/admin/users") ? "active" : ""}>
+            <Tooltip title="Manage Users" placement="right">
+              <Link href="/admin/users" className="tptp">
+                <PeopleAltIcon className="ic-edit" />
+                <span className="text mx-2">{side ? "" : "ManageUsers"}</span>
+              </Link>
+            </Tooltip>
+          </li>
           <li>
             <Tooltip title="Logout" placement="right">
               <Link href="/" className="logout tptp" onClick={handleLogout}>
@@ -124,7 +86,6 @@ const AdminLayout = ({ children }) => {
           </li>
         </ul>
       </section>
-      {/* <!-- SIDEBAR --> */}
 
       {/* <!-- CONTENT --> */}
       <section id="content">
@@ -153,43 +114,29 @@ const AdminLayout = ({ children }) => {
                     <h5>Dashboard</h5>
                   </span>
                 </li>
-                {userInfo.user.leads && (
-                  <li onClick={() => router.push("/admin/home")}>
-                    <HomeIcon className="bx bxs-group" />
-                    <span className="text">
-                      <h5>Home</h5>
-                      <p>Manage Home </p>
-                    </span>
-                  </li>
-                )}
-
-                {userInfo.user.blogs && (
-                  <li onClick={() => router.push("/admin/blogs")}>
-                    <DescriptionIcon className="bx bxs-dollar-circle" />
-                    <span className="text">
-                      <h5>Blogs</h5>
-                      <p>Manage Blogs </p>
-                    </span>
-                  </li>
-                )}
-                {userInfo.user.leads && (
-                  <li onClick={() => router.push("/admin/leads")}>
-                    <LocalLibraryIcon className="bx bxs-dollar-circle" />
-                    <span className="text">
-                      <h5>Leads</h5>
-                      <p>Manage Leads </p>
-                    </span>
-                  </li>
-                )}
-                {userInfo.user.Role.toLowerCase() === "admin" && (
-                  <li onClick={() => router.push("/admin/users")}>
-                    <PeopleAltIcon className="bx bxs-dollar-circle" />
-                    <span className="text">
-                      <h5>Users</h5>
-                      <p>Manage Users </p>
-                    </span>
-                  </li>
-                )}
+                <li onClick={() => router.push("/admin/blogs")}>
+                  <DescriptionIcon className="bx bxs-dollar-circle" />
+                  <span className="text">
+                    <h5>Blogs</h5>
+                    <p>Manage Blogs </p>
+                  </span>
+                </li>
+                <li onClick={() => router.push("/admin/leads")}>
+                  <LocalLibraryIcon className="bx bxs-dollar-circle" />
+                  <span className="text">
+                    <h5>Leads</h5>
+                    <p>Manage Leads </p>
+                  </span>
+                </li>
+                {/* {userInfo.user.Role.toLowerCase() === "admin" && ( */}
+                <li onClick={() => router.push("/admin/users")}>
+                  <PeopleAltIcon className="bx bxs-dollar-circle" />
+                  <span className="text">
+                    <h5>Users</h5>
+                    <p>Manage Users </p>
+                  </span>
+                </li>
+                {/* )} */}
               </ul>
             </div>
           )}

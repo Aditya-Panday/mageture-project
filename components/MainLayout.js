@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -24,6 +25,7 @@ library.add(
 );
 
 export default function MainLayout({ children }) {
+  const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const handleToggle = () => {
@@ -67,28 +69,71 @@ export default function MainLayout({ children }) {
           >
             <ul className="navbar-nav mx-4">
               <li className="nav-item mx-1">
-                <Link href="/" className="nav-link">
+                <Link
+                  href="/"
+                  className="nav-link"
+                  style={{
+                    color: pathname === "/" ? "#40a297" : "black",
+                  }}
+                >
                   <b>HOME</b>
                 </Link>
               </li>
               <li className="nav-item mx-1">
-                <Link href="/about" className="nav-link">
+                <Link
+                  href="/about"
+                  className="nav-link"
+                  style={{
+                    color: pathname.includes("/about") ? "#40a297" : "black",
+                  }}
+                >
                   <b>ABOUT US</b>
                 </Link>
               </li>
               <li className="nav-item mx-1">
-                <Link href="/project" className="nav-link">
+                <Link
+                  href="/podcast"
+                  className="nav-link"
+                  style={{
+                    color: pathname.includes("/podcast") ? "#40a297" : "black",
+                  }}
+                >
                   <b>PODCAST SERIES</b>
                 </Link>
               </li>
               <li className="nav-item mx-1">
-                <Link href="/events" className="nav-link">
+                <Link
+                  href="/events"
+                  className="nav-link"
+                  style={{
+                    color: pathname.includes("/events") ? "#40a297" : "black",
+                  }}
+                >
                   <b>SPEAKING EVENTS</b>
                 </Link>
               </li>
               <li className="nav-item">
-                <Link href="/events" className="nav-link">
+                <Link
+                  href="/hiddengems"
+                  className="nav-link"
+                  style={{
+                    color: pathname.includes("/hiddengems")
+                      ? "#40a297"
+                      : "black",
+                  }}
+                >
                   <b>OUR HIDDEN GEMS</b>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  href="/contact"
+                  className="nav-link"
+                  style={{
+                    color: pathname.includes("/contact") ? "#40a297" : "black",
+                  }}
+                >
+                  <b>CONTACT US</b>
                 </Link>
               </li>
             </ul>
@@ -96,7 +141,7 @@ export default function MainLayout({ children }) {
         </div>
       </nav>
       {children}
-      <footer className="hmartsectn">
+      <footer className="hmartsectn" style={{ marginTop: "0px" }}>
         <div className="footermiddle">
           <div className="container">
             <div className="footerow">
@@ -109,7 +154,7 @@ export default function MainLayout({ children }) {
                 </div>
 
                 <div className="footerleftlogo">
-                  <Image alt="" src="/logo.png" width={130} height={50} />
+                  <Image alt="" src="/logo.png" width={180} height={80} />
                 </div>
               </div>
 
@@ -117,22 +162,22 @@ export default function MainLayout({ children }) {
                 <div className="footerlinks">
                   <ul>
                     <li>
-                      <Link href="#">Home</Link>
+                      <Link href="/">Home</Link>
                     </li>
                     <li>
-                      <Link href="#">Speaking Events</Link>
+                      <Link href="/events">Speaking Events</Link>
                     </li>
                     <li>
-                      <Link href="#">About us</Link>
+                      <Link href="/about">About us</Link>
                     </li>
                     <li>
-                      <Link href="#">Our Hidden Gems</Link>
+                      <Link href="/hiddengems">Our Hidden Gems</Link>
                     </li>
                     <li>
-                      <Link href="#">Podcast Series</Link>
+                      <Link href="/podcast-series">Podcast Series</Link>
                     </li>
                     <li>
-                      <Link href="#">Contact Us</Link>
+                      <Link href="/contact">Contact Us</Link>
                     </li>
                   </ul>
                 </div>
@@ -141,20 +186,18 @@ export default function MainLayout({ children }) {
                   <h4 style={{ display: "flex" }}>Start a Conversation:</h4>
                   <div>
                     <FontAwesomeIcon icon={faEnvelopeOpen} />{" "}
-                    <span>backtobasics@Gmail.com</span>
+                    <span> naresh_khurana@yahoo.com</span>
                   </div>
                   <div>
                     <FontAwesomeIcon icon={faPhone} />{" "}
-                    <span >
-                      +91-9899228899
-                    </span>
+                    <span>+91-9818251815</span>
                   </div>
                 </div>
 
                 <div className="socialboxcols">
                   <h4>Follow Us:</h4>
                   <div className="socialicons">
-                    <Link href="#" className="fb" style={{ color: "white" }}>
+                    <Link href="" className="fb" style={{ color: "white" }}>
                       <FontAwesomeIcon icon={["fab", "facebook"]} />
                     </Link>
                     <Link
@@ -165,21 +208,21 @@ export default function MainLayout({ children }) {
                       <FontAwesomeIcon icon={["fab", "instagram"]} />
                     </Link>
                     <Link
-                      href="#"
+                      href=""
                       className="twitter"
                       style={{ color: "white" }}
                     >
                       <FontAwesomeIcon icon={["fab", "twitter"]} />
                     </Link>
                     <Link
-                      href="#"
+                      href=""
                       className="linkedin"
                       style={{ color: "white" }}
                     >
                       <FontAwesomeIcon icon={["fab", "linkedin"]} />
                     </Link>
                     <Link
-                      href="#"
+                      href=""
                       className="youtube"
                       style={{ color: "white" }}
                     >

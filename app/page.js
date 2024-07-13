@@ -1,3 +1,5 @@
+"use client";
+import Events from "@/components/Events";
 import MainLayout from "@/components/MainLayout";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,7 +18,7 @@ export default function Home() {
             <p>Your gateway to captivating stories, and endless inspiration</p>
             <h2>Listen & Subscribe On</h2>
             <div className="herologos">
-              <Link href="#">
+              <Link href="https://open.spotify.com/show/2MPvILycXmxIO2dKuQpIvr">
                 <Image
                   alt="Spotify"
                   src="/spotify.png"
@@ -25,7 +27,7 @@ export default function Home() {
                   style={{ maxWidth: "100%", height: "auto" }}
                 />
               </Link>
-              <Link href="#">
+              <Link href="https://podcasts.apple.com/us/podcast/simplifying-the-gita-gyana-yoga-and-karma-sanyasa-yoga/id1573471085?i=1000594441542">
                 <Image
                   alt="Apple"
                   src="/apple.png"
@@ -34,7 +36,7 @@ export default function Home() {
                   style={{ maxWidth: "100%", height: "auto" }}
                 />
               </Link>
-              <Link href="#">
+              <Link href="https://podcastwise.com/podcast/1573471085-back-to-basics-with-gunnika">
                 <Image
                   alt="Google"
                   src="/google.png"
@@ -68,14 +70,16 @@ export default function Home() {
               </div>
             </div>
             <div className="col-lg-7 col-md-12 ordersm-1">
-              <Image
-                alt="podcast"
-                className="img-fluid"
-                src="/about-podcastimg.png"
-                width={700}
-                height={400}
-                style={{ width: "100%", height: "auto" }}
-              />
+              <Link href="https://open.spotify.com/episode/1hiAMKjeE8uS2hyO4RW6uw?si=bbvHKEQYR_y7iy5jzLsG9A&nd=1&dlsi=170e08cf0bdd48e6">
+                <Image
+                  alt="podcast"
+                  className="img-fluid"
+                  src="/about-podcastimg.png"
+                  width={700}
+                  height={400}
+                  style={{ width: "100%", height: "auto" }}
+                />
+              </Link>
             </div>
           </div>
         </div>
@@ -136,8 +140,53 @@ export default function Home() {
           />
         </div>
       </div>
-      {/* home promotional */}
+      {/* home promotional video*/}
+      <div className="container-fluid">
+        <Events></Events>
+      </div>
 
+      {/* home promotional */}
+      <div className="clearfix"></div>
+      <div className="container-fluid py-4">
+        <div className="hmlogos" style={{ marginBottom: "100px" }}>
+          <div className="bluredbg4"></div>
+          <div className="bluredbg5"></div>
+
+          <div className="container">
+            <div className="row spacebetween">
+              <div className="col-lg-5 col-md-12">
+                <h2 className="homecommonhead">
+                  Most popular podcast <span>listening platforms</span>
+                </h2>
+                <div className="hmaboutexts">
+                  <p>
+                    In our latest episodes, we discuss regarding the simply
+                    dummy text of the printing and typesetting industry. Lorem
+                    Ipsum has been the industrys standard dummy text and
+                    scrambled it to make a type specimen book.
+                  </p>
+                  <p className="textinfo">
+                    Dont miss out on future episodes! Subscribe to our podcast
+                    on your favorite platform to stay in the loop
+                  </p>
+                </div>
+              </div>
+
+              <div className="col-lg-6 col-md-12">
+                <div className="logogroups">
+                  <Image
+                    alt=""
+                    src="/podcast-logo.png"
+                    className="img-fluid"
+                    width={500}
+                    height={300} // Adjust width and height as per your design
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </MainLayout>
   );
 }
