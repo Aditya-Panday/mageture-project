@@ -3,14 +3,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
-
-import { FreeMode, Pagination } from "swiper/modules";
+import "swiper/css/autoplay";
+import { FreeMode, Pagination, Autoplay } from "swiper/modules";
 import Image from "next/image";
 
 export default function Events() {
   return (
     <div className="container-fluid">
-      <div className="hmpromotional" >
+      <div className="hmpromotional">
         <div className="bluredbg1"></div>
         <div className="bluredbg2"></div>
         <div className="bluredbg3"></div>
@@ -30,7 +30,12 @@ export default function Events() {
               pagination={{
                 clickable: true,
               }}
-              modules={[FreeMode, Pagination]}
+              autoplay={{
+                delay: 2000,
+                disableOnInteraction: false,
+              }}
+              loop={true}
+              modules={[FreeMode, Pagination, Autoplay]}
               className="mySwiper"
               breakpoints={{
                 992: {
@@ -57,7 +62,7 @@ export default function Events() {
                     />
                   </div>
                   <div className="promotionalsitmtext">
-                    <h3>Video Title Goes Here...</h3>
+                    <h3 className="my-2">Video Title Goes Here...</h3>
                     <p>
                       Simply dummy text of the printing and typesetting
                       industry.
@@ -76,7 +81,7 @@ export default function Events() {
                     />
                   </div>
                   <div className="promotionalsitmtext">
-                    <h3>Video Title Goes Here...</h3>
+                    <h3 className="my-2">Video Title Goes Here...</h3>
                     <p>
                       Simply dummy text of the printing and typesetting
                       industry.
@@ -95,14 +100,14 @@ export default function Events() {
                     />
                   </div>
                   <div className="promotionalsitmtext">
-                    <h3>Video Title Goes Here...</h3>
+                    <h3 className="my-2">Video Title Goes Here...</h3>
                     <p>
                       Simply dummy text of the printing and typesetting
                       industry.
                     </p>
                   </div>
                 </div>
-              </SwiperSlide>{" "}
+              </SwiperSlide>
               <SwiperSlide>
                 <div className="promotionalitems">
                   <div style={{ width: 300, height: 300 }}>
@@ -114,7 +119,7 @@ export default function Events() {
                     />
                   </div>
                   <div className="promotionalsitmtext">
-                    <h3>Video Title Goes Here...</h3>
+                    <h3 className="my-2">Video Title Goes Here...</h3>
                     <p>
                       Simply dummy text of the printing and typesetting
                       industry.
@@ -122,7 +127,7 @@ export default function Events() {
                   </div>
                 </div>
               </SwiperSlide>
-              <SwiperSlide>
+              {/* <SwiperSlide>
                 <div className="promotionalitems">
                   <div style={{ width: 300, height: 300 }}>
                     <Image
@@ -133,7 +138,7 @@ export default function Events() {
                     />
                   </div>
                   <div className="promotionalsitmtext">
-                    <h3>Video Title Goes Here...</h3>
+                    <h3 className="my-2">Video Title Goes Here...</h3>
                     <p>
                       Simply dummy text of the printing and typesetting
                       industry.
@@ -152,14 +157,14 @@ export default function Events() {
                     />
                   </div>
                   <div className="promotionalsitmtext">
-                    <h3>Video Title Goes Here...</h3>
+                    <h3 className="my-2">Video Title Goes Here...</h3>
                     <p>
                       Simply dummy text of the printing and typesetting
                       industry.
                     </p>
                   </div>
                 </div>
-              </SwiperSlide>
+              </SwiperSlide> */}
             </Swiper>
           </div>
         </div>

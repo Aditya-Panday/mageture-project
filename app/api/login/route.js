@@ -1,10 +1,11 @@
 import connectToMongo from "@/utils/db";
-import USERAUTH from "@/signup/models/user";
+import USERAUTH from "../signup/models/user";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 
 const key = "sy$K9btmosx$msak#@13sjbaj";
+const JWT_SECRET = "sysx$msak#@13sjbaj";
 
 const encodePasswordWithKey = (password, key) => {
   const hash = crypto.createHmac("sha256", key);
@@ -18,14 +19,15 @@ export async function POST(req) {
   const { email, password } = await req.json();
 
   // Validate inputs
-  if (!email || !password) {
-    return NextResponse.json(
-      { error: "Please fill all fields" },
-      { status: 422 }
-    );
-  }
 
   try {
+    if (!email || !password) {
+      return NextResponse.json(
+        { error: "Please fill all fields" },
+        { status: 422 }
+      );
+    }
+
     // Find user by email
     const user = await USERAUTH.findOne({ email });
 
@@ -41,15 +43,65 @@ export async function POST(req) {
     }
 
     // Generate JWT token
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ _id: user._id, Role: user.Role }, JWT_SECRET, {
       expiresIn: "2h",
     });
 
     // Return token and user information
-    const { _id, email } = user;
-    return NextResponse.json({ token, user: { _id, email } }, { status: 200 });
+    const { _id, name, Role } = user;
+    return NextResponse.json(
+      { token, user: { _id, name, Role } },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error verifying user:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(req) {
+  await connectToMongo();
+  try {
+    const users = await USERAUTH.find({}, "_id name email Role");
+    return NextResponse.json({ users }, { status: 200 });
+  } catch (error) {
+    console.error("Error verifying user:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req) {
+  await connectToMongo(); // Connect to MongoDB
+  const { searchParams } = new URL(req.url);
+
+  const id = searchParams.get("id");
+
+  // Check if id parameter is undefined
+  if (!id) {
+    return NextResponse.json({ error: "unauthorized" }, { status: 400 });
+  }
+  try {
+    // Check if user exists
+    const user = await USERAUTH.findById(id);
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    // If user exists, delete it
+    await USERAUTH.findByIdAndDelete(id);
+
+    return NextResponse.json(
+      { message: "User deleted successfully" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error deleting user:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

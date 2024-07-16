@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from "react";
-import { ToastContainer } from "react-toastify";
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Tooltip from "@mui/material/Tooltip";
 import Link from "next/link";
@@ -16,16 +16,35 @@ import DensityMediumIcon from "@mui/icons-material/DensityMedium";
 const AdminLayout = ({ children }) => {
   const router = useRouter();
   const currentPath = usePathname();
-  const username = "Admin";
-  const [side, setSide] = useState(true);
+  const [username, setUsername] = useState("");
+  const [side, setSide] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState("user");
 
   const handleLogout = () => {
-    console.log("Logged out");
+    localStorage.removeItem("userInfo");
+    toast.success("Logged out successfully!");
+    router.push("/");
   };
 
   const handleClick = () => {
     setSide(!side);
   };
+  useEffect(() => {
+    const userInfo = localStorage.getItem("userInfo");
+
+    if (!userInfo) {
+      router.push("/");
+    } else {
+      setLoading(false);
+      const user = JSON.parse(userInfo);
+      setUsername(user.user.name);
+      setRole(user.user.Role);
+    }
+  }, [router]);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="container-fluid">
@@ -56,7 +75,7 @@ const AdminLayout = ({ children }) => {
             <Tooltip title="Blogs" placement="right">
               <Link href="/admin/blogs" className="tptp">
                 <DescriptionIcon className="ic-edit" />
-                <span className="text mx-2">{side ? "" : "Blogs"}</span>
+                <span className="text mx-2">{side ? "" : "Podcast"}</span>
               </Link>
             </Tooltip>
           </li>
@@ -68,14 +87,18 @@ const AdminLayout = ({ children }) => {
               </Link>
             </Tooltip>
           </li>
-          <li className={currentPath.includes("/admin/users") ? "active" : ""}>
-            <Tooltip title="Manage Users" placement="right">
-              <Link href="/admin/users" className="tptp">
-                <PeopleAltIcon className="ic-edit" />
-                <span className="text mx-2">{side ? "" : "ManageUsers"}</span>
-              </Link>
-            </Tooltip>
-          </li>
+          {role.toLowerCase() === "admin" && (
+            <li
+              className={currentPath.includes("/admin/users") ? "active" : ""}
+            >
+              <Tooltip title="Manage Users" placement="right">
+                <Link href="/admin/users" className="tptp">
+                  <PeopleAltIcon className="ic-edit" />
+                  <span className="text mx-2">{side ? "" : "ManageUsers"}</span>
+                </Link>
+              </Tooltip>
+            </li>
+          )}
           <li>
             <Tooltip title="Logout" placement="right">
               <Link href="/" className="logout tptp" onClick={handleLogout}>
@@ -93,8 +116,7 @@ const AdminLayout = ({ children }) => {
         <nav className="nav-nav">
           <DensityMediumIcon onClick={handleClick} />
           <h5 className="pt-2 mx-3">
-            Welcome{" "}
-            <span style={{ color: "#3572EF" }}>{username ? username : ""}</span>
+            Welcome <span style={{ color: "#3572EF" }}>{username}</span>
           </h5>
         </nav>
         {/* <!-- NAVBAR --> */}
@@ -117,33 +139,32 @@ const AdminLayout = ({ children }) => {
                 <li onClick={() => router.push("/admin/blogs")}>
                   <DescriptionIcon className="bx bxs-dollar-circle" />
                   <span className="text">
-                    <h5>Blogs</h5>
-                    <p>Manage Blogs </p>
+                    <h5>Podcast</h5>
+                    <p>Manage Podcast </p>
                   </span>
                 </li>
                 <li onClick={() => router.push("/admin/leads")}>
                   <LocalLibraryIcon className="bx bxs-dollar-circle" />
                   <span className="text">
                     <h5>Leads</h5>
-                    <p>Manage Leads </p>
+                    <p>Manage Leads</p>
                   </span>
                 </li>
-                {/* {userInfo.user.Role.toLowerCase() === "admin" && ( */}
-                <li onClick={() => router.push("/admin/users")}>
-                  <PeopleAltIcon className="bx bxs-dollar-circle" />
-                  <span className="text">
-                    <h5>Users</h5>
-                    <p>Manage Users </p>
-                  </span>
-                </li>
-                {/* )} */}
+                {role.toLowerCase() === "admin" && (
+                  <li onClick={() => router.push("/admin/users")}>
+                    <PeopleAltIcon className="bx bxs-dollar-circle" />
+                    <span className="text">
+                      <h5>Users</h5>
+                      <p>Manage Users </p>
+                    </span>
+                  </li>
+                )}
               </ul>
             </div>
           )}
           {children}
         </main>
       </section>
-      <ToastContainer />
     </div>
   );
 };

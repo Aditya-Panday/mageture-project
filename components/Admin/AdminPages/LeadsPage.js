@@ -1,12 +1,10 @@
-"use client";
 import React from "react";
-// import { get, del } from "../utils/CustomAxios";
-// import DeleteIcon from "@mui/icons-material/Delete";
-import { ToastContainer, toast } from "react-toastify";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import moment from "moment";
+import moment from "moment";
 
-export default function LeadsPage() {
+export default function LeadsPage({ data, deleteLead }) {
   return (
     <div>
       <div className="tit">
@@ -14,13 +12,14 @@ export default function LeadsPage() {
       </div>
       <hr />
       <div className="container my-4" style={{ overflow: "scroll" }}>
-        {/* {data.length > 0 ? (
-          <table class="table table-striped">
+        {data.length > 0 ? (
+          <table className="table table-striped">
             <thead style={{ backgroundColor: "black", color: "white" }}>
               <tr>
                 <th scope="col">Name</th>
-                <th scope="col">EmailId</th>
+                <th scope="col">Email</th>
                 <th scope="col">Phone</th>
+                <th scope="col">Message</th>
                 <th scope="col">CreatedDate</th>
                 <th scope="col">Action</th>
               </tr>
@@ -29,13 +28,14 @@ export default function LeadsPage() {
               {data.map((item, index) => {
                 const formattedDate = moment(item.createdDate).format(
                   "YYYY-MM-DD"
-                ); // Format the date using Moment.js
+                );
 
                 return (
                   <tr key={index}>
-                    <td className="p-3">{item.name}</td>
+                    <td className="p-3">{item.fullname}</td>
                     <td>{item.email}</td>
                     <td>{item.phone}</td>
+                    <td>{item.message}</td>
                     <td>{formattedDate}</td>
                     <td>
                       <span
@@ -59,7 +59,7 @@ export default function LeadsPage() {
           <div className="text-center">
             <b>No Record Found</b>
           </div>
-        )} */}
+        )}
       </div>
       <ToastContainer />
     </div>

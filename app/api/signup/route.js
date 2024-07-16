@@ -15,10 +15,9 @@ export async function POST(req) {
   try {
     await connectToMongo(); // Connect to MongoDB
 
-    const { email, password } = await req.json();
-
+    const { name, email, password } = await req.json();
     // Validate inputs
-    if (!email || !password) {
+    if (!email || !password || !name) {
       return NextResponse.json(
         { error: "Please fill all fields" },
         { status: 422 }
@@ -39,6 +38,7 @@ export async function POST(req) {
 
     // Create new user document
     const newUser = new USERAUTH({
+      name,
       email,
       password: hashedPassword,
     });

@@ -1,10 +1,7 @@
 "use client";
-import React, { useState } from "react";
 import {
   AppBar,
   Button,
-  Checkbox,
-  FormControlLabel,
   Modal,
   TextField,
   Toolbar,
@@ -15,44 +12,30 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { FormControl } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-export default function ManageUsers() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [data, setData] = useState([]);
-  const [selectedOptions, setSelectedOptions] = useState({
-    home: false,
-    commonsetting: false,
-    banner: false,
-    pages: false,
-    blogs: false,
-    leads: false,
-  });
-  const [open, setOpen] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleSelectChange = (event) => {
-    const { name, checked } = event.target;
-    setSelectedOptions({
-      ...selectedOptions,
-      [name]: checked,
-    });
-  };
-
-  const handleTogglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+export default function ManageUsers({
+  email,
+  setEmail,
+  setPassword,
+  password,
+  handleClose,
+  handleOpen,
+  handleSubmit,
+  open,
+  name,
+  setName,
+  loading,
+  handleTogglePasswordVisibility,
+  deleteUser,
+  data,
+  showPassword,
+}) {
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
@@ -74,7 +57,7 @@ export default function ManageUsers() {
             aria-labelledby="modal-modal-title"
             className="mx-auto"
             aria-describedby="modal-modal-description"
-            style={{ zIndex: 1300, maxWidth: "500px" }} // Ensures modal is on top
+            style={{ zIndex: 1200, maxWidth: "500px" }}
           >
             <div
               className="modal-dialog-centered"
@@ -99,9 +82,19 @@ export default function ManageUsers() {
                     Add Users
                   </h5>
                 </div>
-                <hr  className="mb-4"/>
+                <hr className="mb-4" />
                 <div className="modal-body">
                   <div className="row">
+                    <div className="mb-3">
+                      <TextField
+                        id="Name"
+                        label="Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="w-100"
+                        variant="outlined"
+                      />
+                    </div>
                     <div className="col-md-6 mb-3">
                       <TextField
                         id="email"
@@ -141,30 +134,6 @@ export default function ManageUsers() {
                         }}
                       />
                     </div>
-                    <div>
-                      <div>
-                        <b>Options</b>
-                      </div>
-                      <FormControl component="fieldset">
-                        <div className="mt-2">
-                          {Object.entries(selectedOptions).map(
-                            ([key, value]) => (
-                              <FormControlLabel
-                                key={key}
-                                control={
-                                  <Checkbox
-                                    checked={value}
-                                    onChange={handleSelectChange}
-                                    name={key}
-                                  />
-                                }
-                                label={key}
-                              />
-                            )
-                          )}
-                        </div>
-                      </FormControl>
-                    </div>
                   </div>
                 </div>
                 <div className="modal-footer">
@@ -176,7 +145,11 @@ export default function ManageUsers() {
                   >
                     Close
                   </Button>
-                  <Button variant="contained" color="primary">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit}
+                  >
                     Create User
                   </Button>
                 </div>
@@ -190,55 +163,35 @@ export default function ManageUsers() {
           <table className="table table-striped">
             <thead style={{ backgroundColor: "black", color: "white" }}>
               <tr>
+                <th scope="col">Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Role</th>
-                <th scope="col">Home</th>
-                <th scope="col">Banner</th>
-                <th scope="col">CommonSetting</th>
-                <th scope="col">Blogs</th>
-                <th scope="col">Leads</th>
-                <th scope="col">Pages</th>
-                <th scope="col">Action</th>
+                <th scope="col">Delete</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((item, index) => {
-                return (
-                  <tr key={index}>
-                    <td className="p-3">{item.email}</td>
-                    <td>{item.Role}</td>
-                    <td style={{ color: item.home ? "green" : "red" }}>
-                      {item.home ? "Access" : "False"}
-                    </td>
-                    <td style={{ color: item.banner ? "green" : "red" }}>
-                      {item.banner ? "Access" : "False"}
-                    </td>
-                    <td style={{ color: item.commonsetting ? "green" : "red" }}>
-                      {item.commonsetting ? "Access" : "False"}
-                    </td>
-                    <td style={{ color: item.blogs ? "green" : "red" }}>
-                      {item.blogs ? "Access" : "False"}
-                    </td>
-                    <td style={{ color: item.leads ? "green" : "red" }}>
-                      {item.leads ? "Access" : "False"}
-                    </td>
-                    <td style={{ color: item.pages ? "green" : "red" }}>
-                      {item.pages ? "Access" : "False"}
-                    </td>
-                    <td>
-                      <span
-                        className="m-2 my-4 p-1"
-                        style={{
-                          border: "2px solid red",
-                          borderRadius: "10px",
-                          color: "red",
-                        }}
-                        title="Delete"
-                      ></span>
-                    </td>
-                  </tr>
-                );
-              })}
+              {data.map((item, index) => (
+                <tr key={index}>
+                  <td className="p-3">{item.name}</td>
+                  <td>{item.email}</td>
+                  <td>{item.Role}</td>
+                  <td>
+                    <span
+                      className="m-2 my-4 p-1"
+                      style={{
+                        border: "2px solid red",
+                        borderRadius: "10px",
+                        color: "red",
+                      }}
+                      title="Delete"
+                      onClick={() => deleteUser(item._id)}
+                    >
+                      {" "}
+                      <DeleteIcon />
+                    </span>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         ) : (

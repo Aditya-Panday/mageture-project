@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import { TextField } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { CircularProgress, TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
@@ -9,53 +10,59 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { post } from "@/utils/axios";
 
 export default function Login() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  //   const handleLogin = async () => {
-  //     setLoading(true);
-  //     if (!email || !password) {
-  //       toast.error("Please fill all the fields!", {
-  //         autoClose: 2000,
-  //       });
-  //       setLoading(false);
-  //       return;
-  //     }
+  const handleLogin = async () => {
+    setLoading(true);
+    if (!email || !password) {
+      toast.error("Please fill all the fields!", {
+        autoClose: 2000,
+      });
+      setLoading(false);
+      return;
+    }
 
-  //     try {
-  //       const { data } = await post(
-  //         process.env.REACT_APP_BASE_URL + "/auth/login",
-  //         { email, password }
-  //       );
-  //       setToken(data.token);
-  //       localStorage.setItem("userInfo", JSON.stringify(data));
-  //       toast.success("Login Successfully!", {
-  //         autoClose: 2000,
-  //       });
-  //       setTimeout(() => {
-  //         Navigate("/admindashboard");
-  //       }, 800);
-  //     } catch (error) {
-  //       if (error.error) {
-  //         toast.error(error.error, {
-  //           autoClose: 2000,
-  //         });
-  //       } else {
-  //         toast.error("Server Error", {
-  //           autoClose: 2000,
-  //         });
-  //       }
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+    try {
+      const { data } = await post("http://localhost:3000/api/login", {
+        email,
+        password,
+      });
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      toast.success("Login Successfully!", {
+        autoClose: 1500,
+      });
+      setTimeout(() => {
+        router.push("/admin/dashboard");
+      }, 300);
+      setEmail("");
+      setPassword("");
+    } catch (error) {
+      console.log(error);
+      if (error.data.error) {
+        toast.error(error.data.error, {
+          autoClose: 2000,
+        });
+      } else {
+        toast.error("Server Error", {
+          autoClose: 2000,
+        });
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="container-fluid log-page">
       <Box
@@ -103,13 +110,12 @@ export default function Login() {
               ),
             }}
           />
-          <Button variant="contained">
-            {/* {loading ? (
+          <Button variant="contained" onClick={handleLogin}>
+            {loading ? (
               <CircularProgress style={{ color: "black" }} />
             ) : (
               "Login"
-            )} */}
-            Login
+            )}
           </Button>
 
           <div className=" text-center p-0 "></div>
