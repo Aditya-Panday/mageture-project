@@ -2,6 +2,7 @@ import connectToMongo from "@/utils/db";
 import USERAUTH from "./models/user";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
+import corsMiddleware from "@/utils/corsMiddleware";
 
 const key = process.env.SECRET_KEY;
 
@@ -11,11 +12,12 @@ const encodePasswordWithKey = (password, key) => {
   return hash.digest("hex");
 };
 
-export async function POST(req) {
+const postHandler = async (req, res) => {
   try {
     await connectToMongo(); // Connect to MongoDB
 
     const { name, email, password } = await req.json();
+
     // Validate inputs
     if (!email || !password || !name) {
       return NextResponse.json(
@@ -55,4 +57,6 @@ export async function POST(req) {
     console.error("Error creating user:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
-}
+};
+
+export const POST = corsMiddleware(postHandler);

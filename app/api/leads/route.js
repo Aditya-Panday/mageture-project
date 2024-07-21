@@ -1,8 +1,9 @@
 import connectToMongo from "@/utils/db";
 import LEADS from "../leads/models/leads";
 import { NextResponse } from "next/server";
+import corsMiddleware from "@/utils/corsMiddleware";
 
-export async function POST(req) {
+const postHandler = async (req, res) => {
   await connectToMongo();
   const { email, phone, fullname, message } = await req.json();
 
@@ -13,6 +14,7 @@ export async function POST(req) {
         { status: 422 }
       );
     }
+
     const newLead = new LEADS({
       email,
       phone,
@@ -34,9 +36,9 @@ export async function POST(req) {
       { status: 500 }
     );
   }
-}
+};
 
-export async function GET(req) {
+const getHandler = async (req, res) => {
   await connectToMongo(); // Connect to MongoDB
 
   try {
@@ -49,9 +51,9 @@ export async function GET(req) {
       { status: 500 }
     );
   }
-}
+};
 
-export async function DELETE(req) {
+const deleteHandler = async (req, res) => {
   await connectToMongo(); // Connect to MongoDB
 
   const { searchParams } = new URL(req.url);
@@ -81,4 +83,8 @@ export async function DELETE(req) {
       { status: 500 }
     );
   }
-}
+};
+
+export const POST = corsMiddleware(postHandler);
+export const GET = corsMiddleware(getHandler);
+export const DELETE = corsMiddleware(deleteHandler);

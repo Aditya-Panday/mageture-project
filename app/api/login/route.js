@@ -3,6 +3,7 @@ import USERAUTH from "../signup/models/user";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
+import corsMiddleware from "@/utils/corsMiddleware";
 
 const key = process.env.SECRET_KEY;
 const JWT_SECRET = process.env.JWT_SECRET_KEY;
@@ -13,13 +14,12 @@ const encodePasswordWithKey = (password, key) => {
   return hash.digest("hex");
 };
 
-export async function POST(req) {
+const postHandler = async (req, res) => {
   await connectToMongo(); // Connect to MongoDB
 
   const { email, password } = await req.json();
 
   // Validate inputs
-
   try {
     if (!email || !password) {
       return NextResponse.json(
@@ -60,23 +60,23 @@ export async function POST(req) {
       { status: 500 }
     );
   }
-}
+};
 
-export async function GET(req) {
+const getHandler = async (req, res) => {
   await connectToMongo();
   try {
     const users = await USERAUTH.find({}, "_id name email Role");
     return NextResponse.json({ users }, { status: 200 });
   } catch (error) {
-    console.error("Error verifying user:", error);
+    console.error("Error retrieving users:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
     );
   }
-}
+};
 
-export async function DELETE(req) {
+const deleteHandler = async (req, res) => {
   await connectToMongo(); // Connect to MongoDB
   const { searchParams } = new URL(req.url);
 
@@ -86,6 +86,7 @@ export async function DELETE(req) {
   if (!id) {
     return NextResponse.json({ error: "unauthorized" }, { status: 400 });
   }
+
   try {
     // Check if user exists
     const user = await USERAUTH.findById(id);
@@ -107,4 +108,8 @@ export async function DELETE(req) {
       { status: 500 }
     );
   }
-}
+};
+
+export const POST = corsMiddleware(postHandler);
+export const GET = corsMiddleware(getHandler);
+export const DELETE = corsMiddleware(deleteHandler);

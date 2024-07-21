@@ -1,8 +1,9 @@
 import connectToMongo from "@/utils/db";
 import EVENTS from "./models/events";
 import { NextResponse } from "next/server";
+import corsMiddleware from "@/utils/corsMiddleware";
 
-export async function POST(req) {
+const postHandler = async (req, res) => {
   await connectToMongo();
   const { videoUrl, title, description } = await req.json();
 
@@ -31,9 +32,9 @@ export async function POST(req) {
       { status: 500 }
     );
   }
-}
+};
 
-export async function GET(req) {
+const getHandler = async (req, res) => {
   await connectToMongo();
   try {
     const events = await EVENTS.find();
@@ -45,9 +46,9 @@ export async function GET(req) {
       { status: 500 }
     );
   }
-}
+};
 
-export async function DELETE(req) {
+const deleteHandler = async (req, res) => {
   await connectToMongo();
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
@@ -76,4 +77,8 @@ export async function DELETE(req) {
       { status: 500 }
     );
   }
-}
+};
+
+export const POST = corsMiddleware(postHandler);
+export const GET = corsMiddleware(getHandler);
+export const DELETE = corsMiddleware(deleteHandler);
