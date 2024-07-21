@@ -13,7 +13,7 @@ export default function Home() {
   const getData = async () => {
     setGetLoading(true);
     try {
-      const response = await get(`${process.env.BASE_URL}/podcast`);
+      const response = await get(`${process.env.BASE_URL}/api/podcast`);
       setData(response.data);
       console.log("Podcast", response.data);
       setGetLoading(false);

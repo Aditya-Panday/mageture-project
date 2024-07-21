@@ -13,7 +13,7 @@ export default function Page() {
   const getData = async () => {
     setLoading(true);
     try {
-      const response = await get(`${process.env.BASE_URL}/leads`);
+      const response = await get(`${process.env.BASE_URL}/api/leads`);
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -33,7 +33,7 @@ export default function Page() {
 
     console.log("deleteUser", id);
     try {
-      await del(`${process.env.BASE_URL}/leads?id=${id}`);
+      await del(`${process.env.BASE_URL}/api/leads?id=${id}`);
       getData();
       toast.success("Lead Deleted Successfully!", {
         autoClose: 1200,

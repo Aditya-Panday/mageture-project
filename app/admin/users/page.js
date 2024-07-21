@@ -37,7 +37,7 @@ export default function Page() {
     if (!confirm) return;
 
     try {
-      await del(`${process.env.BASE_URL}/login?id=${id}`);
+      await del(`${process.env.BASE_URL}/api/login?id=${id}`);
       toast.success("User deleted successfully", {
         autoClose: 1000,
       });
@@ -52,7 +52,7 @@ export default function Page() {
 
   const getData = async () => {
     try {
-      const response = await get(`${process.env.BASE_URL}/login`);
+      const response = await get(`${process.env.BASE_URL}/api/login`);
       setData(response.data.users);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -85,7 +85,7 @@ export default function Page() {
         password,
         name,
       };
-      await post(`${process.env.BASE_URL}/signup`, postData);
+      await post(`${process.env.BASE_URL}/api/signup`, postData);
       toast.success("User Created Successfully!", {
         autoClose: 1000,
       });

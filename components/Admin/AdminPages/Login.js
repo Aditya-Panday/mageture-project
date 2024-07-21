@@ -34,7 +34,7 @@ export default function Login() {
     }
 
     try {
-      const { data } = await post("http://localhost:3000/api/login", {
+      const { data } = await post(`${BASE_URL}/api/login`, {
         email,
         password,
       });
