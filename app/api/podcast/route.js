@@ -1,8 +1,12 @@
 import connectToMongo from "@/utils/db";
 import PODCAST from "./models/podcast";
 import { NextResponse } from "next/server";
+import setCorsHeaders from "@/utils/helper";
 
-export async function POST(req) {
+export async function POST(req, res) {
+  if (setCorsHeaders(req, res)) {
+    return;
+  }
   await connectToMongo();
   const { title, link, description, imgurl } = await req.json();
 
@@ -35,7 +39,10 @@ export async function POST(req) {
   }
 }
 
-export async function GET(req) {
+export async function GET(req, res) {
+  if (setCorsHeaders(req, res)) {
+    return;
+  }
   await connectToMongo();
   try {
     const podcast = await PODCAST.find();
@@ -49,7 +56,10 @@ export async function GET(req) {
   }
 }
 
-export async function DELETE(req) {
+export async function DELETE(req, res) {
+  if (setCorsHeaders(req, res)) {
+    return;
+  }
   await connectToMongo();
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");

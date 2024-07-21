@@ -3,6 +3,7 @@ import USERAUTH from "../signup/models/user";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
+import setCorsHeaders from "@/utils/helper";
 
 const key = process.env.SECRET_KEY;
 const JWT_SECRET = process.env.JWT_SECRET_KEY;
@@ -13,9 +14,12 @@ const encodePasswordWithKey = (password, key) => {
   return hash.digest("hex");
 };
 
-export async function POST(req) {
-  await connectToMongo(); // Connect to MongoDB
+export async function POST(req, res) {
+  if (setCorsHeaders(req, res)) {
+    return;
+  }
 
+  await connectToMongo(); // Connect to MongoDB
   const { email, password } = await req.json();
 
   // Validate inputs
@@ -62,7 +66,10 @@ export async function POST(req) {
   }
 }
 
-export async function GET(req) {
+export async function GET(req, res) {
+  if (setCorsHeaders(req, res)) {
+    return;
+  }
   await connectToMongo();
   try {
     const users = await USERAUTH.find({}, "_id name email Role");
@@ -76,7 +83,10 @@ export async function GET(req) {
   }
 }
 
-export async function DELETE(req) {
+export async function DELETE(req, res) {
+  if (setCorsHeaders(req, res)) {
+    return;
+  }
   await connectToMongo(); // Connect to MongoDB
   const { searchParams } = new URL(req.url);
 
