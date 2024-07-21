@@ -28,7 +28,7 @@ export default function Page() {
         title,
         videoUrl,
       };
-      await post(`${process.env.BASE_URL}/api/events`, postData);
+      await post("/api/events", postData);
       toast.success("Event Created Successfully", {
         autoClose: 1500,
       });
@@ -48,7 +48,7 @@ export default function Page() {
   const getData = async () => {
     setGetLoading(true);
     try {
-      const response = await get(`${process.env.BASE_URL}/api/events`);
+      const response = await get("/api/events");
       setData(response.data);
       console.log("EventsData", response.data);
     } catch (error) {
@@ -67,7 +67,7 @@ export default function Page() {
     if (!confirm) return;
 
     try {
-      await del(`${process.env.BASE_URL}/api/events?id=${id}`);
+      await del(`/api/events?id=${id}`);
       getData();
       toast.success("Event Deleted Successfully!", {
         autoClose: 1200,

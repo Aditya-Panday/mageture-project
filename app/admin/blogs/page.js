@@ -57,7 +57,7 @@ export default function Page() {
         imgurl,
         link,
       };
-      await post(`${process.env.BASE_URL}/api/podcast`, postData);
+      await post("/api/podcast", postData);
       toast.success("Podcast Created Successfully", {
         autoClose: 1500,
       });
@@ -84,7 +84,7 @@ export default function Page() {
   const getData = async () => {
     setGetLoading(true);
     try {
-      const response = await get(`${process.env.BASE_URL}/api/podcast`);
+      const response = await get("/api/podcast");
       setData(response.data);
       console.log("podcastData", response.data);
     } catch (error) {
@@ -104,7 +104,7 @@ export default function Page() {
 
     console.log("deleteUser", id);
     try {
-      await del(`${process.env.BASE_URL}/api/podcast?id=${id}`);
+      await del(`/api/podcast?id=${id}`);
       getData();
       toast.success("Podcast Deleted Successfully!", {
         autoClose: 1200,

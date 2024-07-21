@@ -17,7 +17,7 @@ export default function Page() {
   const getData = async () => {
     setGetLoading(true);
     try {
-      const response = await get("http://localhost:3000/api/events");
+      const response = await get("/api/events");
       setData(response.data);
       console.log("EventsData", response.data);
       setGetLoading(false);

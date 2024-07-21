@@ -34,7 +34,7 @@ export default function Login() {
     }
 
     try {
-      const { data } = await post(`${BASE_URL}/api/login`, {
+      const { data } = await post("/api/login", {
         email,
         password,
       });

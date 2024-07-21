@@ -22,7 +22,7 @@ export default function Page() {
         email,
         phone,
       };
-      await post(`${process.env.BASE_URL}/api/leads`, postData);
+      await post("/api/leads", postData);
       toast.success("Thanks for connect us...", {
         autoClose: 2000,
       });
