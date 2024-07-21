@@ -1,12 +1,8 @@
 import connectToMongo from "@/utils/db";
 import LEADS from "../leads/models/leads";
 import { NextResponse } from "next/server";
-import setCorsHeaders from "@/app/middleware";
 
-export async function POST(req, res) {
-  if (setCorsHeaders(req, res)) {
-    return;
-  }
+export async function POST(req) {
   await connectToMongo();
   const { email, phone, fullname, message } = await req.json();
 
@@ -40,10 +36,7 @@ export async function POST(req, res) {
   }
 }
 
-export async function GET(req, res) {
-  if (setCorsHeaders(req, res)) {
-    return;
-  }
+export async function GET(req) {
   await connectToMongo(); // Connect to MongoDB
 
   try {
@@ -58,10 +51,7 @@ export async function GET(req, res) {
   }
 }
 
-export async function DELETE(req, res) {
-  if (setCorsHeaders(req, res)) {
-    return;
-  }
+export async function DELETE(req) {
   await connectToMongo(); // Connect to MongoDB
 
   const { searchParams } = new URL(req.url);
