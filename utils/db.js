@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const connectionURI = "mongodb://127.0.0.1:27017/mageture";
+const connectionURI = process.env.MONGO_URI;
 
 const connectToMongo = async () => {
   try {

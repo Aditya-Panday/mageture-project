@@ -1,11 +1,12 @@
 import React from "react";
 import { ToastContainer } from "react-toastify";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Tooltip, CircularProgress } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 import "react-toastify/dist/ReactToastify.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Image from "next/image";
+import moment from "moment";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -31,6 +32,8 @@ export default function BlogsPage({
   loading,
   handleSubmit,
   data,
+  deleteblog,
+  getLoading,
 }) {
   return (
     <div>
@@ -109,18 +112,34 @@ export default function BlogsPage({
         </div>
       </div>
       <div className="container my-4" style={{ overflow: "scroll" }}>
-        {data.length > 0 ? (
+        {getLoading ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              padding: "20px",
+            }}
+          >
+            <CircularProgress />
+          </div>
+        ) : data.length === 0 ? (
+          <div className="text-center">
+            <b>No Record Found</b>
+          </div>
+        ) : (
           <table className="table table-striped">
             <thead style={{ backgroundColor: "black", color: "white" }}>
               <tr>
                 <th scope="col">Image</th>
                 <th scope="col">Title</th>
                 <th scope="col">Description</th>
+                <th scope="col">Link</th>
                 <th scope="col">CreatedDate</th>
+                <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((item, index) => {
+              {data?.map((item, index) => {
                 const formattedCreatedDate = moment(item.createdDate).format(
                   "YYYY-MM-DD HH:mm:ss"
                 );
@@ -137,9 +156,20 @@ export default function BlogsPage({
                       />
                     </td>
                     <td>{item.title}</td>
-                    <td>{item.description}</td>
-                    <td>{item.phone}</td>
-                    <td>{item.content}</td>
+                    <td>
+                      <Tooltip title={item.description}>
+                        {item.description.length > 10
+                          ? `${item.description.slice(0, 15)}...`
+                          : item.description}
+                      </Tooltip>
+                    </td>
+                    <td>
+                      <Tooltip title={item.link}>
+                        {item.link.length > 10
+                          ? `${item.link.slice(0, 15)}...`
+                          : item.link}
+                      </Tooltip>
+                    </td>
                     <td>{formattedCreatedDate}</td>
                     <td>
                       <span
@@ -151,7 +181,7 @@ export default function BlogsPage({
                         }}
                         title="Delete"
                       >
-                        <DeleteIcon onClick={() => deleteCommon(item._id)} />
+                        <DeleteIcon onClick={() => deleteblog(item._id)} />
                       </span>
                     </td>
                   </tr>
@@ -159,10 +189,6 @@ export default function BlogsPage({
               })}
             </tbody>
           </table>
-        ) : (
-          <div className="text-center">
-            <b>No Record Found</b>
-          </div>
         )}
       </div>
 

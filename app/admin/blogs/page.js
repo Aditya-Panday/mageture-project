@@ -1,9 +1,8 @@
 "use client";
 import AdminLayout from "@/components/Admin/AdminLayout";
 import BlogsPage from "@/components/Admin/AdminPages/BlogsPage";
-import { post } from "@/utils/axios";
+import { post, get, del } from "@/utils/axios";
 import { uploadImageToCloudinary } from "@/utils/helper";
-import { get } from "mongoose";
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,6 +13,7 @@ export default function Page() {
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
   const [loading, setLoading] = useState(false);
+  const [getLoading, setGetLoading] = useState(false);
   const [data, setData] = useState([]);
 
   const handleFileChange = (e) => {
@@ -57,10 +57,11 @@ export default function Page() {
         imgurl,
         link,
       };
-      await post("http://localhost:3000/api/podcast", postData);
+      await post(`${process.env.BASE_URL}/podcast`, postData);
       toast.success("Podcast Created Successfully", {
         autoClose: 1500,
       });
+      getData();
     } catch (error) {
       if (error) {
         toast.error(error.data.error, {
@@ -76,18 +77,42 @@ export default function Page() {
       setDescription("");
       setLink("");
       setFile("");
-      setWork(false);
+      setLoading(false);
     }
   };
 
   const getData = async () => {
+    setGetLoading(true);
     try {
-      const response = await get("http://localhost:3000/api/podcast");
+      const response = await get(`${process.env.BASE_URL}/podcast`);
       setData(response.data);
       console.log("podcastData", response.data);
     } catch (error) {
       toast.error(error.error, {
         autoClose: 1500,
+      });
+    } finally {
+      setGetLoading(false);
+    }
+  };
+
+  const deleteblog = async (id) => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this lead?"
+    );
+    if (!confirm) return;
+
+    console.log("deleteUser", id);
+    try {
+      await del(`${process.env.BASE_URL}/podcast?id=${id}`);
+      getData();
+      toast.success("Podcast Deleted Successfully!", {
+        autoClose: 1200,
+      });
+    } catch (error) {
+      console.error("Error deleting podcast:", error);
+      toast.error(error.error, {
+        autoClose: 1200,
       });
     }
   };
@@ -110,7 +135,9 @@ export default function Page() {
         handleFileChange={handleFileChange}
         loading={loading}
         handleSubmit={handleSubmit}
+        deleteblog={deleteblog}
         data={data}
+        getLoading={getLoading}
       />
     </AdminLayout>
   );

@@ -57,7 +57,7 @@ export default function ManageUsers({
             aria-labelledby="modal-modal-title"
             className="mx-auto"
             aria-describedby="modal-modal-description"
-            style={{ zIndex: 1200, maxWidth: "500px" }}
+            style={{ zIndex: 2000, maxWidth: "500px" }}
           >
             <div
               className="modal-dialog-centered"

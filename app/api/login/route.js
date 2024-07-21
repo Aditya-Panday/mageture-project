@@ -4,8 +4,8 @@ import { NextResponse } from "next/server";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 
-const key = "sy$K9btmosx$msak#@13sjbaj";
-const JWT_SECRET = "sysx$msak#@13sjbaj";
+const key = process.env.SECRET_KEY;
+const JWT_SECRET = process.env.JWT_SECRET_KEY;
 
 const encodePasswordWithKey = (password, key) => {
   const hash = crypto.createHmac("sha256", key);

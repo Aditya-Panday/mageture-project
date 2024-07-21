@@ -1,10 +1,11 @@
 import React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ToastContainer } from "react-toastify";
+import { CircularProgress, Tooltip } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 
-export default function LeadsPage({ data, deleteLead }) {
+export default function LeadsPage({ data, deleteLead, loading }) {
   return (
     <div>
       <div className="tit">
@@ -12,7 +13,21 @@ export default function LeadsPage({ data, deleteLead }) {
       </div>
       <hr />
       <div className="container my-4" style={{ overflow: "scroll" }}>
-        {data.length > 0 ? (
+        {loading ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              padding: "20px",
+            }}
+          >
+            <CircularProgress />
+          </div>
+        ) : data.length === 0 ? (
+          <div className="text-center">
+            <b>No Record Found</b>
+          </div>
+        ) : (
           <table className="table table-striped">
             <thead style={{ backgroundColor: "black", color: "white" }}>
               <tr>
@@ -33,9 +48,21 @@ export default function LeadsPage({ data, deleteLead }) {
                 return (
                   <tr key={index}>
                     <td className="p-3">{item.fullname}</td>
-                    <td>{item.email}</td>
+                    <td>
+                      <Tooltip title={item.email}>
+                        {item.email.length > 10
+                          ? `${item.email.slice(0, 15)}...`
+                          : item.email}
+                      </Tooltip>
+                    </td>
                     <td>{item.phone}</td>
-                    <td>{item.message}</td>
+                    <td>
+                      <Tooltip title={item.message}>
+                        {item.message.length > 10
+                          ? `${item.message.slice(0, 15)}...`
+                          : item.message}
+                      </Tooltip>
+                    </td>
                     <td>{formattedDate}</td>
                     <td>
                       <span
@@ -55,10 +82,6 @@ export default function LeadsPage({ data, deleteLead }) {
               })}
             </tbody>
           </table>
-        ) : (
-          <div className="text-center">
-            <b>No Record Found</b>
-          </div>
         )}
       </div>
       <ToastContainer />

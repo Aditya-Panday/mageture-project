@@ -222,7 +222,7 @@ export default function MainLayout({ children }) {
                       <FontAwesomeIcon icon={["fab", "linkedin"]} />
                     </Link>
                     <Link
-                      href=""
+                      href="https://www.youtube.com/watch?app=desktop&v=YGyhqeOBilo"
                       className="youtube"
                       style={{ color: "white" }}
                     >

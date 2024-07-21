@@ -15,6 +15,7 @@ export default function Page() {
   const [open, setOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(true);
+  // const [getLoading, setLoading] = useState(true);
   const router = useRouter();
 
   const handleTogglePasswordVisibility = () => {
@@ -36,11 +37,11 @@ export default function Page() {
     if (!confirm) return;
 
     try {
-      await del(`http://localhost:3000/api/login?id=${id}`);
+      await del(`${process.env.BASE_URL}/login?id=${id}`);
       toast.success("User deleted successfully", {
         autoClose: 1000,
       });
-      getData(); // Refresh user data after deletion
+      getData();
     } catch (error) {
       console.error("Error deleting user:", error);
       toast.error("Failed to delete user", {
@@ -51,7 +52,7 @@ export default function Page() {
 
   const getData = async () => {
     try {
-      const response = await get("http://localhost:3000/api/login");
+      const response = await get(`${process.env.BASE_URL}/login`);
       setData(response.data.users);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -84,7 +85,7 @@ export default function Page() {
         password,
         name,
       };
-      await post("http://localhost:3000/api/signup", postData);
+      await post(`${process.env.BASE_URL}/signup`, postData);
       toast.success("User Created Successfully!", {
         autoClose: 1000,
       });

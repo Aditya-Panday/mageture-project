@@ -9,7 +9,6 @@ export default function page() {
         <div className="hmlogos" style={{ marginBottom: "100px" }}>
           <div className="bluredbg4"></div>
           <div className="bluredbg5"></div>
-
           <div className="container">
             <div className="row spacebetween">
               <div className="col-lg-5 col-md-12">

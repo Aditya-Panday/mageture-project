@@ -3,8 +3,26 @@ import Events from "@/components/Events";
 import MainLayout from "@/components/MainLayout";
 import Image from "next/image";
 import Link from "next/link";
+import React, { useState, useEffect } from "react";
+import { get } from "@/utils/axios";
 
 export default function Home() {
+  const [data, setData] = useState([]);
+  const [getLoading, setGetLoading] = useState(false);
+
+  const getData = async () => {
+    setGetLoading(true);
+    try {
+      const response = await get(`${process.env.BASE_URL}/podcast`);
+      setData(response.data);
+      console.log("Podcast", response.data);
+      setGetLoading(false);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <MainLayout>
       <div className="container-fluid main-ban">
@@ -142,7 +160,7 @@ export default function Home() {
       </div>
       {/* home promotional video*/}
       <div className="container-fluid">
-        <Events></Events>
+        <Events data={data} getLoading={getLoading}></Events>
       </div>
 
       {/* home promotional */}

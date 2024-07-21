@@ -3,7 +3,7 @@ import USERAUTH from "./models/user";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 
-const key = "sy$K9btmosx$msak#@13sjbaj";
+const key = process.env.SECRET_KEY;
 
 const encodePasswordWithKey = (password, key) => {
   const hash = crypto.createHmac("sha256", key);

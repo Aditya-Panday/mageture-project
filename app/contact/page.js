@@ -10,9 +10,11 @@ export default function Page() {
   const [message, setMessage] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     try {
       const postData = {
         fullname,
@@ -20,19 +22,17 @@ export default function Page() {
         email,
         phone,
       };
-      await post("http://localhost:3000/api/leads", postData);
+      await post(`${process.env.BASE_URL}/leads`, postData);
       toast.success("Thanks for connect us...", {
         autoClose: 2000,
       });
-      setFullname("");
-      setEmail("");
-      setPhone("");
-      setMessage("");
     } catch (error) {
       console.log("error", error);
       toast.error("Some error occured please try again after some time.", {
         autoClose: 1500,
       });
+    } finally {
+      setLoading(false);
       setFullname("");
       setEmail("");
       setPhone("");
@@ -133,6 +133,7 @@ export default function Page() {
                   hover: true,
                 }}
                 className="btn sub w-100"
+                disabled={loading}
               >
                 Submit
               </button>

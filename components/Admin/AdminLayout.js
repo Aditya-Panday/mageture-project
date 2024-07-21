@@ -12,6 +12,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import DensityMediumIcon from "@mui/icons-material/DensityMedium";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 
 const AdminLayout = ({ children }) => {
   const router = useRouter();
@@ -67,6 +68,14 @@ const AdminLayout = ({ children }) => {
               <Link href="/admin/dashboard" className="tptp">
                 <DashboardIcon className="ic-edit" />
                 <span className="text mx-2">{side ? "" : "Dashboard"}</span>
+              </Link>
+            </Tooltip>
+          </li>
+          <li className={currentPath.includes("/admin/events") ? "active" : ""}>
+            <Tooltip title="Events" placement="right">
+              <Link href="/admin/events" className="tptp">
+                <EmojiEventsIcon className="ic-edit" />
+                <span className="text mx-2">{side ? "" : "Events"}</span>
               </Link>
             </Tooltip>
           </li>
@@ -134,6 +143,13 @@ const AdminLayout = ({ children }) => {
                   <DashboardIcon className="bx bxs-calendar-check" />
                   <span className="text">
                     <h5>Dashboard</h5>
+                  </span>
+                </li>
+                <li onClick={() => router.push("/admin/events")}>
+                  <EmojiEventsIcon className="bx bxs-calendar-check" />
+                  <span className="text">
+                    <h5>Events</h5>
+                    <p>Manage Events </p>
                   </span>
                 </li>
                 <li onClick={() => router.push("/admin/blogs")}>

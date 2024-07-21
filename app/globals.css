@@ -1506,3 +1506,19 @@ footer {
   font-size: 45px;
   margin: 0 0 15px;
 }
+
+.event-img {
+  box-shadow: 10px 10px 10px rgba(127, 126, 126, 0.776);
+  border-radius: 18px;
+}
+
+.promotionalsitmtext h3 {
+  color: #a18012;
+  font-size: 28px;
+  margin: 0 0 10px;
+}
+@media only screen and (max-width: 991px) {
+  .promotionalsitmtext p {
+    font-size: 16px;
+  }
+}
