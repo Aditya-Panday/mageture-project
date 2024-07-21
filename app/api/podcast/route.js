@@ -1,15 +1,13 @@
 import connectToMongo from "@/utils/db";
 import PODCAST from "./models/podcast";
 import { NextResponse } from "next/server";
-import cors, { runMiddleware } from "@/utils/corsMiddleware";
 
 export async function POST(req) {
-  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo();
   const { title, link, description, imgurl } = await req.json();
 
   try {
-    if (!title || !description || !link || !imgurl) {
+    if (!title || !description || !title || !imgurl) {
       return NextResponse.json(
         { error: "Please fill all fields" },
         { status: 422 }
@@ -38,7 +36,6 @@ export async function POST(req) {
 }
 
 export async function GET(req) {
-  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo();
   try {
     const podcast = await PODCAST.find();
@@ -53,7 +50,6 @@ export async function GET(req) {
 }
 
 export async function DELETE(req) {
-  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo();
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");

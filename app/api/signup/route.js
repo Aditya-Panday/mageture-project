@@ -2,7 +2,6 @@ import connectToMongo from "@/utils/db";
 import USERAUTH from "./models/user";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
-import cors, { runMiddleware } from "@/utils/corsMiddleware";
 
 const key = process.env.SECRET_KEY;
 
@@ -13,8 +12,6 @@ const encodePasswordWithKey = (password, key) => {
 };
 
 export async function POST(req) {
-  await runMiddleware(req, res, cors); // Run CORS middleware
-
   try {
     await connectToMongo(); // Connect to MongoDB
 

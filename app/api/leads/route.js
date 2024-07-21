@@ -1,10 +1,8 @@
 import connectToMongo from "@/utils/db";
 import LEADS from "../leads/models/leads";
 import { NextResponse } from "next/server";
-import cors, { runMiddleware } from "@/utils/corsMiddleware";
 
 export async function POST(req) {
-  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo();
   const { email, phone, fullname, message } = await req.json();
 
@@ -39,7 +37,6 @@ export async function POST(req) {
 }
 
 export async function GET(req) {
-  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo(); // Connect to MongoDB
 
   try {
@@ -55,7 +52,6 @@ export async function GET(req) {
 }
 
 export async function DELETE(req) {
-  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo(); // Connect to MongoDB
 
   const { searchParams } = new URL(req.url);

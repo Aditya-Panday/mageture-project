@@ -1,10 +1,8 @@
 import connectToMongo from "@/utils/db";
 import EVENTS from "./models/events";
 import { NextResponse } from "next/server";
-import cors, { runMiddleware } from "@/utils/corsMiddleware";
 
 export async function POST(req) {
-  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo();
   const { videoUrl, title, description } = await req.json();
 
@@ -36,7 +34,6 @@ export async function POST(req) {
 }
 
 export async function GET(req) {
-  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo();
   try {
     const events = await EVENTS.find();
@@ -51,7 +48,6 @@ export async function GET(req) {
 }
 
 export async function DELETE(req) {
-  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo();
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
