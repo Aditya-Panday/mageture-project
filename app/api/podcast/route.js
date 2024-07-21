@@ -1,7 +1,7 @@
 import connectToMongo from "@/utils/db";
 import PODCAST from "./models/podcast";
 import { NextResponse } from "next/server";
-import setCorsHeaders from "@/utils/helper";
+import setCorsHeaders from "@/app/middleware";
 
 export async function POST(req, res) {
   if (setCorsHeaders(req, res)) {

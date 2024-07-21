@@ -3,7 +3,7 @@ import USERAUTH from "../signup/models/user";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
-import setCorsHeaders from "@/utils/helper";
+import setCorsHeaders from "@/app/middleware";
 
 const key = process.env.SECRET_KEY;
 const JWT_SECRET = process.env.JWT_SECRET_KEY;

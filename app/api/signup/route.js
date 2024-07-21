@@ -2,7 +2,7 @@ import connectToMongo from "@/utils/db";
 import USERAUTH from "./models/user";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
-import setCorsHeaders from "@/utils/helper";
+import setCorsHeaders from "@/app/middleware";
 
 const key = process.env.SECRET_KEY;
 
