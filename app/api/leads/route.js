@@ -1,9 +1,10 @@
 import connectToMongo from "@/utils/db";
 import LEADS from "../leads/models/leads";
 import { NextResponse } from "next/server";
-import corsMiddleware from "@/utils/corsMiddleware";
+import cors, { runMiddleware } from "@/utils/corsMiddleware";
 
-const postHandler = async (req, res) => {
+export async function POST(req) {
+  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo();
   const { email, phone, fullname, message } = await req.json();
 
@@ -14,7 +15,6 @@ const postHandler = async (req, res) => {
         { status: 422 }
       );
     }
-
     const newLead = new LEADS({
       email,
       phone,
@@ -36,9 +36,10 @@ const postHandler = async (req, res) => {
       { status: 500 }
     );
   }
-};
+}
 
-const getHandler = async (req, res) => {
+export async function GET(req) {
+  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo(); // Connect to MongoDB
 
   try {
@@ -51,9 +52,10 @@ const getHandler = async (req, res) => {
       { status: 500 }
     );
   }
-};
+}
 
-const deleteHandler = async (req, res) => {
+export async function DELETE(req) {
+  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo(); // Connect to MongoDB
 
   const { searchParams } = new URL(req.url);
@@ -83,8 +85,4 @@ const deleteHandler = async (req, res) => {
       { status: 500 }
     );
   }
-};
-
-export const POST = corsMiddleware(postHandler);
-export const GET = corsMiddleware(getHandler);
-export const DELETE = corsMiddleware(deleteHandler);
+}

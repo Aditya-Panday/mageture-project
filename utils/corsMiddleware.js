@@ -1,22 +1,22 @@
-// utils/corsMiddleware.js
-export default function corsMiddleware(handler) {
-  return async (req, res) => {
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader("Access-Control-Allow-Origin", "*"); // Replace '*' with your specific origin in production
-    res.setHeader(
-      "Access-Control-Allow-Methods",
-      "GET,OPTIONS,PATCH,DELETE,POST,PUT"
-    );
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
-    );
+import Cors from "cors";
 
-    if (req.method === "OPTIONS") {
-      res.status(200).end();
-      return;
-    }
+// Initializing the cors middleware
+const cors = Cors({
+  methods: ["GET", "HEAD", "POST", "DELETE", "PUT"], // Specify the methods you want to allow
+  origin: "*", // Allow all origins (you can specify specific origins here)
+});
 
-    return handler(req, res);
-  };
+// Helper method to wait for a middleware to execute before continuing
+function runMiddleware(req, res, fn) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+      return resolve(result);
+    });
+  });
 }
+
+export default cors;
+export { runMiddleware };

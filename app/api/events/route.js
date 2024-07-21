@@ -1,9 +1,10 @@
 import connectToMongo from "@/utils/db";
 import EVENTS from "./models/events";
 import { NextResponse } from "next/server";
-import corsMiddleware from "@/utils/corsMiddleware";
+import cors, { runMiddleware } from "@/utils/corsMiddleware";
 
-const postHandler = async (req, res) => {
+export async function POST(req) {
+  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo();
   const { videoUrl, title, description } = await req.json();
 
@@ -32,9 +33,10 @@ const postHandler = async (req, res) => {
       { status: 500 }
     );
   }
-};
+}
 
-const getHandler = async (req, res) => {
+export async function GET(req) {
+  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo();
   try {
     const events = await EVENTS.find();
@@ -46,9 +48,10 @@ const getHandler = async (req, res) => {
       { status: 500 }
     );
   }
-};
+}
 
-const deleteHandler = async (req, res) => {
+export async function DELETE(req) {
+  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo();
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
@@ -77,8 +80,4 @@ const deleteHandler = async (req, res) => {
       { status: 500 }
     );
   }
-};
-
-export const POST = corsMiddleware(postHandler);
-export const GET = corsMiddleware(getHandler);
-export const DELETE = corsMiddleware(deleteHandler);
+}

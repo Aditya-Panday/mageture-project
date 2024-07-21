@@ -1,14 +1,15 @@
 import connectToMongo from "@/utils/db";
 import PODCAST from "./models/podcast";
 import { NextResponse } from "next/server";
-import corsMiddleware from "@/utils/corsMiddleware";
+import cors, { runMiddleware } from "@/utils/corsMiddleware";
 
-const postHandler = async (req, res) => {
+export async function POST(req) {
+  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo();
   const { title, link, description, imgurl } = await req.json();
 
   try {
-    if (!title || !description || !title || !imgurl) {
+    if (!title || !description || !link || !imgurl) {
       return NextResponse.json(
         { error: "Please fill all fields" },
         { status: 422 }
@@ -34,9 +35,10 @@ const postHandler = async (req, res) => {
       { status: 500 }
     );
   }
-};
+}
 
-const getHandler = async (req, res) => {
+export async function GET(req) {
+  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo();
   try {
     const podcast = await PODCAST.find();
@@ -48,9 +50,10 @@ const getHandler = async (req, res) => {
       { status: 500 }
     );
   }
-};
+}
 
-const deleteHandler = async (req, res) => {
+export async function DELETE(req) {
+  await runMiddleware(req, NextResponse, cors); // Apply CORS middleware
   await connectToMongo();
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
@@ -79,8 +82,4 @@ const deleteHandler = async (req, res) => {
       { status: 500 }
     );
   }
-};
-
-export const POST = corsMiddleware(postHandler);
-export const GET = corsMiddleware(getHandler);
-export const DELETE = corsMiddleware(deleteHandler);
+}
