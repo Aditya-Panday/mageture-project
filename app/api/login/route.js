@@ -3,6 +3,7 @@ import USERAUTH from "../signup/models/user";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
+import { corsMiddleware } from "../middleware/corsMiddleware";
 
 const key = process.env.SECRET_KEY;
 const JWT_SECRET = process.env.JWT_SECRET_KEY;
@@ -14,8 +15,8 @@ const encodePasswordWithKey = (password, key) => {
 };
 
 export async function POST(req) {
+  const res = corsMiddleware(req);
   await connectToMongo(); // Connect to MongoDB
-
   const { email, password } = await req.json();
 
   // Validate inputs
@@ -63,6 +64,7 @@ export async function POST(req) {
 }
 
 export async function GET(req) {
+  const res = corsMiddleware(req);
   await connectToMongo();
   try {
     const users = await USERAUTH.find({}, "_id name email Role");
@@ -77,6 +79,8 @@ export async function GET(req) {
 }
 
 export async function DELETE(req) {
+  const res = corsMiddleware(req);
+
   await connectToMongo(); // Connect to MongoDB
   const { searchParams } = new URL(req.url);
 
