@@ -4,8 +4,9 @@ import { NextResponse } from "next/server";
 import { corsMiddleware } from "../middleware/corsMiddleware";
 
 export async function POST(req) {
-  const res = corsMiddleware(req);
+  const res = corsMiddleware(req, NextResponse);
 
+  if (!res) return;
   await connectToMongo();
   const { email, phone, fullname, message } = await req.json();
 
@@ -40,8 +41,9 @@ export async function POST(req) {
 }
 
 export async function GET(req) {
-  const res = corsMiddleware(req);
+  const res = corsMiddleware(req, NextResponse);
 
+  if (!res) return;
   await connectToMongo(); // Connect to MongoDB
 
   try {
@@ -57,7 +59,9 @@ export async function GET(req) {
 }
 
 export async function DELETE(req) {
-  const res = corsMiddleware(req);
+  const res = corsMiddleware(req, NextResponse);
+
+  if (!res) return;
   await connectToMongo(); // Connect to MongoDB
 
   const { searchParams } = new URL(req.url);

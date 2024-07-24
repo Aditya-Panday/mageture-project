@@ -15,7 +15,9 @@ const encodePasswordWithKey = (password, key) => {
 };
 
 export async function POST(req) {
-  const res = corsMiddleware(req);
+  const res = corsMiddleware(req, NextResponse);
+
+  if (!res) return;
   await connectToMongo(); // Connect to MongoDB
   const { email, password } = await req.json();
 
@@ -64,7 +66,9 @@ export async function POST(req) {
 }
 
 export async function GET(req) {
-  const res = corsMiddleware(req);
+  const res = corsMiddleware(req, NextResponse);
+
+  if (!res) return;
   await connectToMongo();
   try {
     const users = await USERAUTH.find({}, "_id name email Role");
@@ -79,8 +83,9 @@ export async function GET(req) {
 }
 
 export async function DELETE(req) {
-  const res = corsMiddleware(req);
+  const res = corsMiddleware(req, NextResponse);
 
+  if (!res) return;
   await connectToMongo(); // Connect to MongoDB
   const { searchParams } = new URL(req.url);
 

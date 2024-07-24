@@ -13,7 +13,9 @@ const encodePasswordWithKey = (password, key) => {
 };
 
 export async function POST(req) {
-  const res = corsMiddleware(req);
+  const res = corsMiddleware(req, NextResponse);
+
+  if (!res) return;
   try {
     await connectToMongo(); // Connect to MongoDB
 

@@ -1,25 +1,15 @@
-// app/api/middleware/corsMiddleware.js
-
-import { NextResponse } from "next/server";
-
-export function corsMiddleware(req) {
-  const res = NextResponse.next();
-
-  
-  res.headers.set("Access-Control-Allow-Origin", "*");
-  res.headers.set(
+export function corsMiddleware(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS"
+    "GET, POST, OPTIONS, DELETE, PUT"
   );
-  res.headers.set(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization"
-  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
-  // Handle preflight request
   if (req.method === "OPTIONS") {
-    return new NextResponse(null, { status: 200 });
+    res.status(200).end();
+    return false;
   }
 
-  return res;
+  return true;
 }

@@ -4,7 +4,9 @@ import { NextResponse } from "next/server";
 import { corsMiddleware } from "../middleware/corsMiddleware";
 
 export async function POST(req) {
-  const res = corsMiddleware(req);
+  const res = corsMiddleware(req, NextResponse);
+
+  if (!res) return;
   await connectToMongo();
   const { videoUrl, title, description } = await req.json();
 
@@ -36,7 +38,9 @@ export async function POST(req) {
 }
 
 export async function GET(req) {
-  const res = corsMiddleware(req);
+  const res = corsMiddleware(req, NextResponse);
+
+  if (!res) return;
   await connectToMongo();
   try {
     const events = await EVENTS.find();
@@ -51,7 +55,9 @@ export async function GET(req) {
 }
 
 export async function DELETE(req) {
-  const res = corsMiddleware(req);
+  const res = corsMiddleware(req, NextResponse);
+
+  if (!res) return;
   await connectToMongo();
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
