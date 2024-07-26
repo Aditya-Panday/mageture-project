@@ -22,7 +22,8 @@ export default function Page() {
         email,
         phone,
       };
-      await post("/api/leads", postData);
+      const response = await post("/api/leads", postData);
+      console.log("response", response);
       toast.success("Thanks for connect us...", {
         autoClose: 2000,
       });

@@ -13,17 +13,22 @@ const encodePasswordWithKey = (password, key) => {
   return hash.digest("hex");
 };
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
 export async function POST(req) {
   await connectToMongo(); // Connect to MongoDB
   const { email, password } = await req.json();
 
   // Validate inputs
-
   try {
     if (!email || !password) {
       return NextResponse.json(
         { error: "Please fill all fields" },
-        { status: 422 }
+        { status: 422, headers: corsHeaders }
       );
     }
 
@@ -32,13 +37,19 @@ export async function POST(req) {
 
     // If user does not exist, return error
     if (!user) {
-      return NextResponse.json({ error: "Invalid email" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Invalid email" },
+        { status: 404, headers: corsHeaders }
+      );
     }
 
     // Hash the provided password and compare with stored hashed password
     const hashedPassword = encodePasswordWithKey(password, key);
     if (hashedPassword !== user.password) {
-      return NextResponse.json({ error: "Invalid password" }, { status: 401 });
+      return NextResponse.json(
+        { error: "Invalid password" },
+        { status: 401, headers: corsHeaders }
+      );
     }
 
     // Generate JWT token
@@ -50,13 +61,13 @@ export async function POST(req) {
     const { _id, name, Role } = user;
     return NextResponse.json(
       { token, user: { _id, name, Role } },
-      { status: 200 }
+      { status: 200, headers: corsHeaders }
     );
   } catch (error) {
     console.error("Error verifying user:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     );
   }
 }
@@ -65,12 +76,12 @@ export async function GET(req) {
   await connectToMongo();
   try {
     const users = await USERAUTH.find({}, "_id name email Role");
-    return NextResponse.json({ users }, { status: 200 });
+    return NextResponse.json({ users }, { status: 200, headers: corsHeaders });
   } catch (error) {
     console.error("Error verifying user:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     );
   }
 }
@@ -83,13 +94,19 @@ export async function DELETE(req) {
 
   // Check if id parameter is undefined
   if (!id) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 400 });
+    return NextResponse.json(
+      { error: "unauthorized" },
+      { status: 400, headers: corsHeaders }
+    );
   }
   try {
     // Check if user exists
     const user = await USERAUTH.findById(id);
     if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "User not found" },
+        { status: 404, headers: corsHeaders }
+      );
     }
 
     // If user exists, delete it
@@ -97,13 +114,13 @@ export async function DELETE(req) {
 
     return NextResponse.json(
       { message: "User deleted successfully" },
-      { status: 200 }
+      { status: 200, headers: corsHeaders }
     );
   } catch (error) {
     console.error("Error deleting user:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     );
   }
 }
