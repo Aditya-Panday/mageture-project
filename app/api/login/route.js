@@ -3,6 +3,7 @@ import USERAUTH from "../signup/models/user";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
+import Cors from "@/utils/cors";
 
 const key = process.env.SECRET_KEY;
 const JWT_SECRET = process.env.JWT_SECRET_KEY;
@@ -13,7 +14,9 @@ const encodePasswordWithKey = (password, key) => {
   return hash.digest("hex");
 };
 
-export async function POST(req) {
+export async function POST(req, res) {
+  await Cors(req, res);
+
   await connectToMongo(); // Connect to MongoDB
   const { email, password } = await req.json();
 
@@ -61,7 +64,9 @@ export async function POST(req) {
   }
 }
 
-export async function GET(req) {
+export async function GET(req, res) {
+  await Cors(req, res);
+
   await connectToMongo();
   try {
     const users = await USERAUTH.find({}, "_id name email Role");
@@ -75,10 +80,11 @@ export async function GET(req) {
   }
 }
 
-export async function DELETE(req) {
-  await connectToMongo(); // Connect to MongoDB
-  const { searchParams } = new URL(req.url);
+export async function DELETE(req, res) {
+  await Cors(req, res);
 
+  await connectToMongo(); 
+  const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
 
   // Check if id parameter is undefined

@@ -1,8 +1,10 @@
 import connectToMongo from "@/utils/db";
+import Cors from "@/utils/cors";
 import EVENTS from "./models/events";
 import { NextResponse } from "next/server";
 
-export async function POST(req) {
+export async function POST(req, res) {
+  await Cors(req, res);
   await connectToMongo();
   const { videoUrl, title, description } = await req.json();
 
@@ -33,7 +35,9 @@ export async function POST(req) {
   }
 }
 
-export async function GET(req) {
+export async function GET(req, res) {
+  await Cors(req, res);
+
   await connectToMongo();
   try {
     const events = await EVENTS.find();
@@ -47,7 +51,9 @@ export async function GET(req) {
   }
 }
 
-export async function DELETE(req) {
+export async function DELETE(req, res) {
+  await Cors(req, res);
+
   await connectToMongo();
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");

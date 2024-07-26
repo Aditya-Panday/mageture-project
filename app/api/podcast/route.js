@@ -1,9 +1,11 @@
 import connectToMongo from "@/utils/db";
 import PODCAST from "./models/podcast";
 import { NextResponse } from "next/server";
+import Cors from "@/utils/cors";
 
-export async function POST(req) {
-  
+export async function POST(req, res) {
+  await Cors(req, res);
+
   await connectToMongo();
   const { title, link, description, imgurl } = await req.json();
 
@@ -36,8 +38,9 @@ export async function POST(req) {
   }
 }
 
-export async function GET(req) {
- 
+export async function GET(req, res) {
+  await Cors(req, res);
+
   await connectToMongo();
 
   try {
@@ -52,8 +55,8 @@ export async function GET(req) {
   }
 }
 
-export async function DELETE(req) {
-  
+export async function DELETE(req, res) {
+  await Cors(req, res);
 
   await connectToMongo();
   const { searchParams } = new URL(req.url);

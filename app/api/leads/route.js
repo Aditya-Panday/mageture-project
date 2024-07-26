@@ -1,8 +1,10 @@
 import connectToMongo from "@/utils/db";
 import LEADS from "../leads/models/leads";
 import { NextResponse } from "next/server";
+import Cors from "@/utils/cors";
 
-export async function POST(req) {
+export async function POST(req, res) {
+  await Cors(req, res);
 
   await connectToMongo();
   const { email, phone, fullname, message } = await req.json();
@@ -37,8 +39,9 @@ export async function POST(req) {
   }
 }
 
-export async function GET(req) {
- 
+export async function GET(req, res) {
+  await Cors(req, res);
+
   await connectToMongo(); // Connect to MongoDB
 
   try {
@@ -53,8 +56,9 @@ export async function GET(req) {
   }
 }
 
-export async function DELETE(req) {
-  
+export async function DELETE(req, res) {
+  await Cors(req, res);
+
   await connectToMongo(); // Connect to MongoDB
 
   const { searchParams } = new URL(req.url);
