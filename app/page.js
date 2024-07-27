@@ -15,7 +15,6 @@ export default function Home() {
     try {
       const response = await get(`${process.env.BASE_URL}/api/podcast`);
       setData(response.data);
-      console.log("Podcast", response.data);
       setGetLoading(false);
     } catch (error) {}
   };
@@ -23,6 +22,8 @@ export default function Home() {
   useEffect(() => {
     getData();
   }, []);
+
+
   return (
     <MainLayout>
       <div className="container-fluid main-ban">

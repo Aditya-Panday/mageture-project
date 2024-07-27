@@ -24,7 +24,6 @@
   max-width: 500px;
   min-width: 200px;
   width: 100%;
-  /* Ensures it takes full width within its container */
 }
 
 .text-log {
@@ -1083,7 +1082,7 @@ footer {
 }
 @media only screen and (max-width: 575px) {
   .container {
-    padding-left: 15px;
+    padding-left: 10px;
     padding-right: 15px;
   }
 }
@@ -1207,24 +1206,20 @@ footer {
   width: 100%;
   min-height: auto;
 }
+
 .hmartsectn > .container {
   position: relative;
   z-index: 1;
 }
-@media only screen and (max-width: 575px) {
-  .container {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-}
+
 .row {
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
   display: flex;
   flex-wrap: wrap;
   margin-top: calc(var(--bs-gutter-y) * -1);
-  margin-right: calc(var(--bs-gutter-x) * -0.5);
-  margin-left: calc(var(--bs-gutter-x) * -0.5);
+  /* margin-right: calc(var(--bs-gutter-x) * -0.5); */
+  margin-left: calc(var(--bs-gutter-x) * -0.4);
 }
 .mb-30 {
   margin-bottom: 30px;
@@ -1520,4 +1515,20 @@ footer {
   .promotionalsitmtext p {
     font-size: 16px;
   }
+}
+
+.container,
+.container-fluid,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl,
+.container-xxl {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * 0.1) !important;
+  padding-left: calc(var(--bs-gutter-x) * 0.3) !important;
+  /* margin-right: auto;
+  margin-left: auto; */
 }

@@ -112,7 +112,7 @@ export default function MainLayout({ children }) {
                   <b>SPEAKING EVENTS</b>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item mx-1">
                 <Link
                   href="/hiddengems"
                   className="nav-link"
@@ -125,7 +125,7 @@ export default function MainLayout({ children }) {
                   <b>OUR HIDDEN GEMS</b>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item mx-1">
                 <Link
                   href="/contact"
                   className="nav-link"
@@ -174,7 +174,7 @@ export default function MainLayout({ children }) {
                       <Link href="/hiddengems">Our Hidden Gems</Link>
                     </li>
                     <li>
-                      <Link href="/podcast-series">Podcast Series</Link>
+                      <Link href="/podcast">Podcast Series</Link>
                     </li>
                     <li>
                       <Link href="/contact">Contact Us</Link>
