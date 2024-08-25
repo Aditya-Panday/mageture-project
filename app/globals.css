@@ -1527,8 +1527,8 @@ footer {
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
   width: 100%;
-  padding-right: calc(var(--bs-gutter-x) * 0.1) !important;
-  padding-left: calc(var(--bs-gutter-x) * 0.3) !important;
+  /* padding-right: calc(var(--bs-gutter-x) * 0.1) !important;
+  padding-left: calc(var(--bs-gutter-x) * 0.3) !important; */
   /* margin-right: auto;
   margin-left: auto; */
 }

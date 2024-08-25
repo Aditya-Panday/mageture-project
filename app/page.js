@@ -23,7 +23,6 @@ export default function Home() {
     getData();
   }, []);
 
-
   return (
     <MainLayout>
       <div className="container-fluid main-ban">
@@ -77,14 +76,18 @@ export default function Home() {
                   Check Out the <span>Latest Podcast </span>
                 </h2>
                 <p>
-                  In our latest episodes, we discuss the simply dummy text of
-                  the printing and typesetting industry. Lorem Ipsum has been
-                  the industrys standard dummy text and scrambled it to make a
-                  type specimen book.
+                  Our Podcast series is a powerful medium to make our audiences
+                  aware of our rich heritage. The series further inspires the
+                  young generation to be not only proud of our culture but also
+                  motivates them to research and spread the fragrance of our
+                  ancient achievements and wisdom across the whole world.
                 </p>
                 <p className="textinfo">
-                  Dont miss out on future episodes! Subscribe to our podcast on
-                  your favorite platform to stay in the loop.
+                  While series 1 brings some of the unheard stories of Dwapar
+                  Yuga, series 2 covers the teachings of our holy Book – GITA –
+                  in a much-simplified manner. This series is still under
+                  progress and will ensure to upload rest of podcasts as soon as
+                  they are ready.
                 </p>
               </div>
             </div>
@@ -160,9 +163,9 @@ export default function Home() {
         </div>
       </div>
       {/* home promotional video*/}
-      <div className="container-fluid">
+      {/* <div className="container-fluid">
         <Events data={data} getLoading={getLoading}></Events>
-      </div>
+      </div> */}
 
       {/* home promotional */}
       <div className="clearfix"></div>

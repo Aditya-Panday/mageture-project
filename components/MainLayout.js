@@ -147,10 +147,7 @@ export default function MainLayout({ children }) {
             <div className="footerow">
               <div className="footerboxtop">
                 <div className="footerboxcontent">
-                  <span>
-                    We love working with ambitious brands & individuals
-                  </span>
-                  <h2>Let’s build something great together!</h2>
+                  <span>Let Us Connect Back To Our Roots Together ! </span>
                 </div>
 
                 <div className="footerleftlogo">
