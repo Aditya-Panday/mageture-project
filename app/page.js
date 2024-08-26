@@ -1,5 +1,5 @@
 "use client";
-import Events from "@/components/Events";
+// import Events from "@/components/Events";
 import MainLayout from "@/components/MainLayout";
 import Image from "next/image";
 import Link from "next/link";
@@ -129,15 +129,13 @@ export default function Home() {
             <div className="col-lg-7 col-md-12 textparagraph">
               <p>
                 Growing up in a world filled with diverse perspectives and
-                challenges, I found solace and guidance in the teachings of the
-                Gita. Simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industrys standard dummy text
-                ever since the 1500s, when an unknown printer took a galley of
-                type and scrambled it to make a type specimen book. My passion
-                for learning and storytelling drives me to explore the depths of
-                the Gita, seeking nuggets of wisdom that can inspire and empower
-                listeners on their own journeys of self-discovery and personal
-                growth.
+                challenges, I found solace and guidance in the learning our rich
+                ancient heritage and making the world aware of same through the
+                modern technologies available including Podcasts, speaking
+                events and creating educational videos. My passion for learning
+                and storytelling drives me to explore the depths of our roots,
+                seeking nuggets of wisdom that can inspire and empower listeners
+                on their own journeys of self-discovery and personal growth.
               </p>
             </div>
             <div className="col-lg-5 col-md-12">
